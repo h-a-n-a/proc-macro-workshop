@@ -40,6 +40,15 @@ pub fn derive(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
           self.current_dir = Some(current_dir);
           self
         }
+
+        fn build(&mut self) -> Result<#name, Box<dyn std::error::Error>> {
+          Ok(#name {
+            executable:  self.executable.clone().ok_or("executable is not set")?,
+            args:  self.args.clone().ok_or("args is not set")?,
+            env:  self.env.clone().ok_or("env is not set")?,
+            current_dir:  self.current_dir.clone().ok_or("current_dir is not set")?,
+          })
+        }
       }
 
       impl #name {
